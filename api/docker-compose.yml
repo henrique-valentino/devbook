@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  db:
+    container_name: "mysql_devbook"
+    build:
+      context: .
+      dockerfile: db.Dockerfile 
+    networks:
+      backend:
+        aliases: 
+         - "mysql_devbook"
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: "secret"
+      MYSQL_DATABASE: "devbook"
+      MYSQL_USER: "golang"
+      MYSQL_PASSWORD: "golang"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+networks:
+  backend:
+    driver: bridge
+volumes:
+  mysql_data:
